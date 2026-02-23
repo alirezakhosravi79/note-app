@@ -1,12 +1,26 @@
 import { useState } from "react";
 
 function NoteForm() {
-  const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("Work");
-  const [priority, setPriority] = useState("Medium");
-  const [description, setDescription] = useState("");
+  // const [title, setTitle] = useState("");
+  // const [category, setCategory] = useState("Work");
+  // const [priority, setPriority] = useState("Medium");
+  // const [description, setDescription] = useState("");
 
-  console.log(description);
+  const [formData, setFormDta] = useState({
+    title: "",
+    category: "Work",
+    priority: "Meduim",
+    description: "",
+  });
+
+  const handleChange = (e) => {
+    setFormDta({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+  console.log(formData)
+
   return (
     <form>
       <div className="mb-4">
@@ -14,10 +28,11 @@ function NoteForm() {
           Title
         </label>
         <input
+          name="title"
           type="text"
           className="w-full p-2 border rounded-lg"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={formData.title}
+          onChange={handleChange}
         />
       </div>
       <div className="mb-4">
@@ -26,8 +41,8 @@ function NoteForm() {
         </label>
         <select
           name="priority"
-          value={priority}
-          onChange={(e) => setPriority(e.target.value)}
+          value={formData.priority}
+          onChange={handleChange}
           className="w-full p-2 border rounded-lg"
         >
           <option value="High">🔴 High</option>
@@ -41,8 +56,8 @@ function NoteForm() {
         </label>
         <select
           name="category"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
+          value={formData.category}
+          onChange={handleChange}
           className="w-full p-2 border rounded-lg"
         >
           <option value="Work">📂 Work</option>
@@ -54,16 +69,20 @@ function NoteForm() {
         <label htmlFor="description" className="block font-semibold">
           Description:
         </label>
-      <textarea
-        name='description'
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        className='w-full p-2 border rounded-lg'
-        required
-      ></textarea>
+        <textarea
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          className="w-full p-2 border rounded-lg"
+          required
+        ></textarea>
       </div>
-      <button className="w-full bg-purple-500 text-white py-2 rounded-lg cursor-pointer
-      hover:bg-purple-600">Add Note</button>
+      <button
+        className="w-full bg-purple-500 text-white py-2 rounded-lg cursor-pointer
+      hover:bg-purple-600"
+      >
+        Add Note
+      </button>
     </form>
   );
 }
