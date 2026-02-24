@@ -1,17 +1,13 @@
 import { useState } from "react";
 
-function NoteForm() {
-  // const [title, setTitle] = useState("");
-  // const [category, setCategory] = useState("Work");
-  // const [priority, setPriority] = useState("Medium");
-  // const [description, setDescription] = useState("");
+function NoteForm({notes, setNotes}) {
 
   const [formData, setFormDta] = useState({
     title: "",
     category: "Work",
     priority: "Meduim",
     description: "",
-  });
+  }); 
 
   const handleChange = (e) => {
     setFormDta({
@@ -19,10 +15,30 @@ function NoteForm() {
       [e.target.name]: e.target.value,
     });
   };
-  console.log(formData)
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    //validation
+    if (!formData.title || !formData.description) return;
+
+    //create note object
+    const newNote = {id: Date.now(), ...formData};
+
+    //add notes
+    setNotes([newNote, ...notes])
+
+    //reset form data
+    setFormDta({
+      title: '',
+      category: 'Work',
+      priority: 'Meduim',
+      description:'',
+    })
+
+  }
   return (
-    <form>
+    <form onSubmit={handleSubmit} className="mb-6">
       <div className="mb-4">
         <label htmlFor="title" className="block font-semibold">
           Title
