@@ -1,4 +1,7 @@
 import { useState } from "react";
+import InputText from "./input/InputText";
+import SelectInput from "./input/SelectInput";
+import TextAreaInput from "./input/TextAreaInput";
 
 function NoteForm({ notes, setNotes }) {
   const [formData, setFormDta] = useState({
@@ -51,33 +54,25 @@ function NoteForm({ notes, setNotes }) {
       {/* Form */}
       {isFormVisible && (
         <form onSubmit={handleSubmit} className="mb-6">
-          <div className="mb-4">
-            <label htmlFor="title" className="block font-semibold">
-              Title
-            </label>
-            <input
-              name="title"
-              type="text"
-              className="w-full p-2 border rounded-lg"
-              value={formData.title}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="priority" className="block font-semibold">
-              Priority:
-            </label>
-            <select
-              name="priority"
-              value={formData.priority}
-              onChange={handleChange}
-              className="w-full p-2 border rounded-lg"
-            >
-              <option value="High">🔴 High</option>
-              <option value="Medium">🟠 Medium</option>
-              <option value="Low">🟢 Low</option>
-            </select>
-          </div>
+          <InputText
+            label="Title"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            required
+          />
+
+          <SelectInput
+            label="Priority"
+            name="priority"
+            value={formData.priority}
+            onChange={handleChange}
+            options={[
+              { value: "High", label: "🔴 High" },
+              { value: "Medium", label: "🟠 Medium" },
+              { value: "Low", label: "🟢 Low" },
+            ]}
+          />
           <div className="mb-4">
             <label htmlFor="category" className="block font-semibold">
               Category:
@@ -93,18 +88,13 @@ function NoteForm({ notes, setNotes }) {
               <option value="Ideas">💡 Ideas</option>
             </select>
           </div>
-          <div className="mb-4">
-            <label htmlFor="description" className="block font-semibold">
-              Description:
-            </label>
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              className="w-full p-2 border rounded-lg"
-              required
-            ></textarea>
-          </div>
+          <TextAreaInput
+            label="Description"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            required
+          />
           <button
             className="w-full bg-purple-500 text-white py-2 rounded-lg cursor-pointer
       hover:bg-purple-600"
